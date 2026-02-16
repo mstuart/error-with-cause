@@ -39,7 +39,7 @@
 		"serialize"
 	],
 	"dependencies": {
-		"error-serialize": "^0.0.0-development"
+		"error-serialize": "^1.0.0"
 	},
 	"devDependencies": {
 		"ava": "^6",
