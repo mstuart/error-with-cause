@@ -1,6 +1,6 @@
 {
 	"name": "error-with-cause",
-	"version": "0.0.0-development",
+	"version": "1.0.0",
 	"description": "Create typed error classes with error codes, cause chains, and type guards",
 	"license": "MIT",
 	"repository": "mstuart/error-with-cause",
