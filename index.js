@@ -1,13 +1,13 @@
-import serialize from 'error-serialize';
+import {serialize} from 'error-serialize';
 
 /**
 Create a custom error class with a specific name and error code.
 
-@param {string} name - The error class name.
-@param {string} code - The error code.
+@param {string} name - Value assigned to `error.name`, shown in stack traces.
+@param {string} code - Stable machine-readable identifier assigned to `error.code`, for branching without matching on message text.
 @param {object} [options] - Options for the error class.
 @param {ErrorConstructor} [options.parent] - The parent error class to extend.
-@returns {Function} A custom error class.
+@returns {(...arguments_: unknown[]) => unknown} A custom error class.
 */
 export function createErrorClass(name, code, options = {}) {
 	const Parent = options.parent ?? Error;
@@ -62,5 +62,5 @@ Check if an error has a specific error code.
 @returns {boolean} True if the error has the given code.
 */
 export function isErrorWithCode(error, code) {
-	return error instanceof Error && /** @type {any} */ (error).code === code;
+	return error instanceof Error && /** @type {unknown} */ (error).code === code;
 }

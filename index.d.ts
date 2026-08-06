@@ -30,8 +30,8 @@ export type CreateErrorClassOptions = {
 /**
 Create a custom error class with a specific name and error code.
 
-@param name - The error class name.
-@param code - The error code.
+@param name - Value assigned to `error.name`, shown in stack traces.
+@param code - Stable machine-readable identifier assigned to `error.code`, for branching without matching on message text.
 @param options - Options for the error class.
 @returns A custom error class constructor.
 
