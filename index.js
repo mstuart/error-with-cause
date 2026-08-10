@@ -1,4 +1,4 @@
-import {serialize} from 'error-serialize';
+import { serialize } from "error-serialize";
 
 /**
 Create a custom error class with a specific name and error code.
@@ -10,48 +10,50 @@ Create a custom error class with a specific name and error code.
 @returns {(...arguments_: unknown[]) => unknown} A custom error class.
 */
 export function createErrorClass(name, code, options = {}) {
-	const Parent = options.parent ?? Error;
+  const Parent = options.parent ?? Error;
 
-	class CustomError extends Parent {
-		constructor(message, errorOptions = {}) {
-			super(message, errorOptions.cause ? {cause: errorOptions.cause} : undefined);
-			this.name = name;
-			this.code = code;
+  class CustomError extends Parent {
+    constructor(message, errorOptions = {}) {
+      super(
+        message,
+        errorOptions.cause ? { cause: errorOptions.cause } : undefined
+      );
+      this.name = name;
+      this.code = code;
 
-			if (errorOptions.data !== undefined) {
-				this.data = errorOptions.data;
-			}
+      if (errorOptions.data !== undefined) {
+        this.data = errorOptions.data;
+      }
 
-			if (errorOptions.cause !== undefined) {
-				this.cause = errorOptions.cause;
-			}
-		}
+      if (errorOptions.cause !== undefined) {
+        this.cause = errorOptions.cause;
+      }
+    }
 
-		toJSON() {
-			const json = {
-				name: this.name,
-				code: this.code,
-				message: this.message,
-				stack: this.stack,
-			};
+    toJSON() {
+      const json = {
+        code: this.code,
+        message: this.message,
+        name: this.name,
+        stack: this.stack,
+      };
 
-			if (this.data !== undefined) {
-				json.data = this.data;
-			}
+      if (this.data !== undefined) {
+        json.data = this.data;
+      }
 
-			if (this.cause !== undefined) {
-				json.cause = this.cause instanceof Error
-					? serialize(this.cause)
-					: this.cause;
-			}
+      if (this.cause !== undefined) {
+        json.cause =
+          this.cause instanceof Error ? serialize(this.cause) : this.cause;
+      }
 
-			return json;
-		}
-	}
+      return json;
+    }
+  }
 
-	Object.defineProperty(CustomError, 'name', {value: name});
+  Object.defineProperty(CustomError, "name", { value: name });
 
-	return CustomError;
+  return CustomError;
 }
 
 /**
@@ -62,5 +64,5 @@ Check if an error has a specific error code.
 @returns {boolean} True if the error has the given code.
 */
 export function isErrorWithCode(error, code) {
-	return error instanceof Error && /** @type {unknown} */ (error).code === code;
+  return error instanceof Error && /** @type {unknown} */ (error).code === code;
 }
