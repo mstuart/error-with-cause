@@ -1,31 +1,35 @@
 export type ErrorWithCode = {
-	readonly name: string;
-	readonly code: string;
-	readonly message: string;
-	readonly data?: unknown;
-	readonly cause?: unknown;
-	readonly stack?: string;
+  readonly name: string;
+  readonly code: string;
+  readonly message: string;
+  readonly data?: unknown;
+  readonly cause?: unknown;
+  readonly stack?: string;
 
-	toJSON(): { // eslint-disable-line @typescript-eslint/naming-convention
-		name: string;
-		code: string;
-		message: string;
-		stack?: string;
-		data?: unknown;
-		cause?: unknown;
-	};
+  toJSON: () => {
+    // eslint-disable-line @typescript-eslint/naming-convention
+    name: string;
+    code: string;
+    message: string;
+    stack?: string;
+    data?: unknown;
+    cause?: unknown;
+  };
 } & Error;
 
-export type ErrorWithCodeConstructor = new (message: string, options?: {cause?: unknown; data?: unknown}) => ErrorWithCode;
+export type ErrorWithCodeConstructor = new (
+  message: string,
+  options?: { cause?: unknown; data?: unknown }
+) => ErrorWithCode;
 
-export type CreateErrorClassOptions = {
-	/**
+export interface CreateErrorClassOptions {
+  /**
 	The parent error class to extend.
 
 	@default Error
 	*/
-	readonly parent?: ErrorConstructor;
-};
+  readonly parent?: ErrorConstructor;
+}
 
 /**
 Create a custom error class with a specific name and error code.
@@ -44,9 +48,9 @@ throw new NotFoundError('User not found', {data: {userId: 123}});
 ```
 */
 export function createErrorClass(
-	name: string,
-	code: string,
-	options?: CreateErrorClassOptions,
+  name: string,
+  code: string,
+  options?: CreateErrorClassOptions
 ): ErrorWithCodeConstructor;
 
 /**
@@ -67,4 +71,7 @@ isErrorWithCode(error, 'ERR_NOT_FOUND');
 //=> true
 ```
 */
-export function isErrorWithCode(error: unknown, code: string): error is ErrorWithCode;
+export function isErrorWithCode(
+  error: unknown,
+  code: string
+): error is ErrorWithCode;
