@@ -1,5 +1,14 @@
+import { readFileSync } from "node:fs";
 import test from "ava";
 import { createErrorClass, isErrorWithCode } from "./index.js";
+
+const packageJson = JSON.parse(
+  readFileSync(new URL("package.json", import.meta.url), "utf8")
+);
+
+test("package depends on the published error-serialize release", (t) => {
+  t.is(packageJson.dependencies["error-serialize"], "^1.0.0");
+});
 
 // CreateErrorClass tests
 
