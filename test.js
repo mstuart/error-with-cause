@@ -55,6 +55,23 @@ test("cause chain is preserved", (t) => {
   t.is(error.cause, rootCause);
 });
 
+test("falsy causes are passed to custom parent constructors", (t) => {
+  class ParentError extends Error {
+    constructor(message, options) {
+      super(message, options);
+      this.receivedOptions = options;
+    }
+  }
+
+  const MyError = createErrorClass("MyError", "ERR_MY", {
+    parent: ParentError,
+  });
+  const error = new MyError("wrapper", { cause: 0 });
+
+  t.deepEqual(error.receivedOptions, { cause: 0 });
+  t.is(error.cause, 0);
+});
+
 test("data property is set", (t) => {
   const MyError = createErrorClass("MyError", "ERR_MY");
   const error = new MyError("test", { data: { userId: 42 } });

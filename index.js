@@ -16,7 +16,9 @@ export function createErrorClass(name, code, options = {}) {
     constructor(message, errorOptions = {}) {
       super(
         message,
-        errorOptions.cause ? { cause: errorOptions.cause } : undefined
+        errorOptions.cause === undefined
+          ? undefined
+          : { cause: errorOptions.cause }
       );
       this.name = name;
       this.code = code;
