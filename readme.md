@@ -35,8 +35,7 @@ try {
 } catch (error) {
 	if (isErrorWithCode(error, 'ERR_NOT_FOUND')) {
 		console.log(error.code); // 'ERR_NOT_FOUND'
-		console.log(error.data); // {userId: 123}
-		console.log(error.toJSON()); // Serialized error object
+		console.log(error.message); // 'User not found'
 	}
 }
 ```
@@ -73,6 +72,8 @@ The parent error class to extend.
 ### isErrorWithCode(error, code)
 
 Type guard that returns `true` if `error` is an `Error` with a matching `.code` property.
+
+The guard guarantees only `Error` and its string `code`. Other coded errors, such as native Node.js errors, need not have `data` or `toJSON()`; those members belong to errors created by `createErrorClass`.
 
 ## Related
 

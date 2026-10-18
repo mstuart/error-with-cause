@@ -74,4 +74,4 @@ isErrorWithCode(error, 'ERR_NOT_FOUND');
 export function isErrorWithCode(
   error: unknown,
   code: string
-): error is ErrorWithCode;
+): error is Error & { readonly code: string };
