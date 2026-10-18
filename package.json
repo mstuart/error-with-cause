@@ -37,6 +37,13 @@
     "fix": "ultracite fix",
     "test": "ava && tsd"
   },
+  "overrides": {
+    "supertap": {
+      "js-yaml": {
+        "argparse": "2.0.1"
+      }
+    }
+  },
   "dependencies": {
     "error-serialize": "^1.0.0"
   },
