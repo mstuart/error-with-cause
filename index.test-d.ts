@@ -1,4 +1,4 @@
-import { expectType } from "tsd";
+import { expectError, expectType } from "tsd";
 import {
   createErrorClass,
   type ErrorWithCode,
@@ -30,8 +30,9 @@ expectType<ErrorWithCode>(errorWithData);
 // IsErrorWithCode type guard
 const unknown_: unknown = new notFoundError("test"); // eslint-disable-line new-cap
 if (isErrorWithCode(unknown_, "ERR_NOT_FOUND")) {
-  expectType<ErrorWithCode>(unknown_);
+  expectType<Error & { readonly code: string }>(unknown_);
   expectType<string>(unknown_.code);
+  expectError(unknown_.toJSON());
 }
 
 // With parent class
